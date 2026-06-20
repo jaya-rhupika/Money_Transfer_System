@@ -128,8 +128,7 @@ export class Dashboard implements OnInit {
             data: [this.stats.sentCount, this.stats.receivedCount],
             backgroundColor: ['#d32f2f', '#2e7d32'],
             borderColor: ['#ffffff', '#ffffff'],
-            borderWidth: 3,
-            fill: true
+            borderWidth: 3
           }
         ]
       },
