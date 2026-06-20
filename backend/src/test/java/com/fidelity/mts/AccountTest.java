@@ -51,7 +51,7 @@ public class AccountTest {
     @Test
     void testDebit_InsufficientBalance() {
 
-        BigDecimal debitAmount = new BigDecimal("200.00");
+        BigDecimal debitAmount = new BigDecimal("1200.00");
 
         BigDecimal originalBalance = account.getBalance();
         BigDecimal resultingBalance = originalBalance.subtract(debitAmount);
