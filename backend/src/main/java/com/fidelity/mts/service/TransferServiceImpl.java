@@ -118,6 +118,23 @@ public class TransferServiceImpl implements TransferService {
         TransactionLog transactionLog = new TransactionLog(senderAcc.getId(), recieverAcc.getId(), amountToBeDebited.doubleValue(),TransactionStatus.SUCCESS,"NULL",idempotency_key, LocalDateTime.now());
         transactionLog.setId(temp);
         transactionLogRepository.save(transactionLog);
+        // Reward points logic: eligible when transfer success, amount > 100, and not self transfer
+        int points = 0;
+        try {
+            if (transactionLog.getStatus() == TransactionStatus.SUCCESS && senderAcc.getId() != recieverAcc.getId() && amountToBeDebited.compareTo(new BigDecimal("100")) > 0) {
+                points = amountToBeDebited.divideToIntegralValue(new BigDecimal("100")).intValue();
+            }
+        } catch (Exception ex) {
+            points = 0;
+        }
+
+        transactionLog.setPoints(points);
+        transactionLogRepository.save(transactionLog);
+
+        if (points > 0) {
+            senderAcc.setTotalRewardPoints(senderAcc.getTotalRewardPoints() + points);
+            accountRepository.saveAndFlush(senderAcc);
+        }
         return new TransferResponseDto(
                 "TRX-" + transactionLog.getId(),
                 "Transfer completed",

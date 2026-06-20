@@ -1,12 +1,14 @@
 package com.fidelity.mts.controller;
 
+import com.fidelity.mts.dto.ChangePasswordRequestDto;
 import com.fidelity.mts.entity.UserCredentials;
 import com.fidelity.mts.repository.UserCredentialsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
@@ -32,5 +34,36 @@ public class SecurityController {
             return ResponseEntity.ok(user.get());
         }
         return ResponseEntity.status(401).body("Invalid credentials");
+    }
+
+    @PutMapping("/auth/change-password")
+    public ResponseEntity<?> changePassword(Principal principal, @RequestBody ChangePasswordRequestDto request) {
+        if (principal == null) {
+            return ResponseEntity.status(401).body("Unauthorized");
+        }
+
+        String username = principal.getName();
+        Optional<UserCredentials> userOpt = userCredentialsRepository.findByUsername(username);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+
+        UserCredentials user = userOpt.get();
+        if (request.getCurrentPassword() == null || !request.getCurrentPassword().equals(user.getPassword())) {
+            return ResponseEntity.badRequest().body("Current password is incorrect");
+        }
+
+        if (request.getNewPassword() == null || request.getNewPassword().isBlank()) {
+            return ResponseEntity.badRequest().body("New password cannot be empty");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            return ResponseEntity.badRequest().body("New password and confirmation do not match");
+        }
+
+        user.setPassword(request.getNewPassword());
+        userCredentialsRepository.save(user);
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }

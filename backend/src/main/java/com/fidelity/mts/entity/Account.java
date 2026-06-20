@@ -26,6 +26,8 @@ public class Account{
 
 	@Column(name = "last_updated",columnDefinition = "TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
 	private LocalDateTime lastUpdated;
+	@Column(name = "total_reward_points", columnDefinition = "INT DEFAULT 0")
+	private int totalRewardPoints;
 	public Account() {
 	}
 
@@ -83,6 +85,14 @@ public class Account{
 
 	public void setLastUpdated(LocalDateTime lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+
+	public int getTotalRewardPoints() {
+		return totalRewardPoints;
+	}
+
+	public void setTotalRewardPoints(int totalRewardPoints) {
+		this.totalRewardPoints = totalRewardPoints;
 	}
 
 	public BigDecimal debit(BigDecimal current_bal, BigDecimal debit_amount) {

@@ -38,6 +38,9 @@ public class TransactionLog {
 	@Column(name = "created_on", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdOn;
 
+	@Column(name = "points", columnDefinition = "INT DEFAULT 0")
+	private int points;
+
 	@ManyToOne
 	@JoinColumn(
 			name="from_account_id",
@@ -70,6 +73,7 @@ public class TransactionLog {
 		this.failureReason = failureReason;
 		this.idempotencyKey = idempotencyKey;
 		this.createdOn = createdOn;
+		this.points = 0;
 	}
 
 	// Getters and Setters
@@ -136,5 +140,13 @@ public class TransactionLog {
 
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
 	}
 }
