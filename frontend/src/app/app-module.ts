@@ -9,6 +9,8 @@ import { Dashboard } from './component/dashboard/dashboard';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { Transfer } from './component/transfer/transfer';
 import { History } from './component/history/history';
+import { Rewards } from './component/rewards/rewards';
+import { Redeem } from './component/redeem/redeem';
 import { Profile } from './component/profile/profile';
 import { CommonModule } from '@angular/common';
 import { HttpinterceptorService } from './service/httpinterceptor';
@@ -22,6 +24,8 @@ import { NgChartsModule } from 'ng2-charts';
     Dashboard,
     Transfer,
     History,
+    Rewards,
+    Redeem,
     Profile
   ],
   imports: [

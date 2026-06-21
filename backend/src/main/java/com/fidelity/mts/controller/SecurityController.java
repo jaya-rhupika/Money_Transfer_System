@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 import java.security.Principal;
 import java.util.Optional;
@@ -64,6 +65,8 @@ public class SecurityController {
         user.setPassword(request.getNewPassword());
         userCredentialsRepository.save(user);
 
-        return ResponseEntity.ok("Password updated successfully");
+        return ResponseEntity.ok(
+            Map.of("message", "Password changed successfully")
+        );
     }
 }

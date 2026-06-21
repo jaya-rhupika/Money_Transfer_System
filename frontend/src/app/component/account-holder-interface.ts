@@ -6,4 +6,5 @@ export interface AccountHolderInterface {
   version: number,
   lastUpdated: Date,
   active: boolean
+  totalRewardPoints?: number
 }

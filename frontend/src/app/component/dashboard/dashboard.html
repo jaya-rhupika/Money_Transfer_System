@@ -53,6 +53,13 @@
         <div class="label">History</div>
       </button>
 
+      <button class="action-card" (click)="goToRewards()">
+        <div class="icon-circle">
+          <span class="material-symbols-outlined">emoji_events</span>
+        </div>
+        <div class="label">Rewards</div>
+      </button>
+
       <button class="action-card" (click)="goToProfile()">
         <div class="icon-circle">
           <span class="material-symbols-outlined">person</span>
@@ -60,8 +67,8 @@
         <div class="label">Profile</div>
       </button>
 
-      <button class="action-card" (click)="logout()">
-        <div class="icon-circle">
+      <button class="action-card logout-card" (click)="logout()">
+        <div class="icon-circle logout-icon">
           <span class="material-symbols-outlined">logout</span>
         </div>
         <div class="label">Logout</div>

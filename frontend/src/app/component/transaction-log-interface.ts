@@ -7,4 +7,5 @@ export interface TransactionLogInterface {
   failureReason: string;
   idempotencyKey: string;
   createdOn: string; 
+  points?: number;
 }

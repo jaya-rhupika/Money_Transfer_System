@@ -126,18 +126,29 @@ export class Dashboard implements OnInit {
         datasets: [
           {
             data: [this.stats.sentCount, this.stats.receivedCount],
-            backgroundColor: ['#d32f2f', '#2e7d32'],
+            backgroundColor: ['#ef4444', '#16a34a'],
             borderColor: ['#ffffff', '#ffffff'],
-            borderWidth: 3
+            borderWidth: 3,
+            hoverOffset: 8,
+            borderRadius: 12,
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: true,
+        cutout: '58%',
+        layout: {
+          padding: 12
+        },
         plugins: {
           legend: {
-            position: 'bottom'
+            position: 'bottom',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
+            }
           },
           tooltip: {
             callbacks: {
@@ -162,6 +173,11 @@ export class Dashboard implements OnInit {
 
   goToTransfer() {
     this.router.navigate(['/transfer', this.accId]);
+    this.cd.detectChanges();
+  }
+
+  goToRewards() {
+    this.router.navigate(['/rewards', this.accId]);
     this.cd.detectChanges();
   }
 

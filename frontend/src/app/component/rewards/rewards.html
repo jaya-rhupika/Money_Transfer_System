@@ -1,0 +1,77 @@
+<div class="page rewards-page">
+  <div class="shell rewards-shell">
+    <div class="header">
+      <h2>Rewards</h2>
+      <div class="sub">Account: {{ accId }}</div>
+    </div>
+ 
+    <div class="info-row">
+      <div class="points-summary">
+        <div class="points-label">Total Reward Points</div>
+        <div class="points-value">{{ totalPoints }} <span class="points-icon">🏅</span></div>
+      </div>
+      <div class="action-buttons">
+        <button (click)="showInfo()" class="info-btn">How it works</button>
+        <button (click)="goRedeem()" class="redeem-btn">Redeem</button>
+      </div>
+    </div>
+ 
+    <div *ngIf="loading" class="empty state">Loading rewards...</div>
+ 
+    <table *ngIf="!loading && rewardTransactions.length>0" class="tx-table rewards-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>To Account</th>
+          <th>Amount</th>
+          <th>Reward</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let t of rewardTransactions">
+          <td>{{ t.createdOn | date:'dd MMM yyyy, hh:mm a' }}</td>
+          <td>{{ t.toAccountId }}</td>
+          <td>₹ {{ t.amount | number:'1.2-2' }}</td>
+          <td><span class="reward-pill">{{ t.points }}<span class="medal">🏅</span></span></td>
+        </tr>
+      </tbody>
+    </table>
+ 
+    <div *ngIf="!loading && rewardTransactions.length===0" class="empty state">No rewards yet. Send successful transfers over ₹100 to earn points.</div>
+  </div>
+
+  <div class="bottom-nav rewards-nav">
+    <button class="nav-item" (click)="goHome()">
+      <span class="material-symbols-outlined">home</span>
+      <div>Home</div>
+    </button>
+    <button class="nav-item" (click)="goToTransfer()">
+      <span class="material-symbols-outlined">sync_alt</span>
+      <div>Transfer</div>
+    </button>
+    <button class="nav-item active" (click)="goToRewards()">
+      <span class="material-symbols-outlined">emoji_events</span>
+      <div>Rewards</div>
+    </button>
+    <button class="nav-item" (click)="goToHistory()">
+      <span class="material-symbols-outlined">history</span>
+      <div>History</div>
+    </button>
+  </div>
+
+  <div class="modal-backdrop" *ngIf="showPopup" (click)="closeInfo()"></div>
+  <div class="info-modal" *ngIf="showPopup">
+    <div class="modal-header">
+      <h3>How Rewards Work</h3>
+      <button class="close-btn" (click)="closeInfo()">×</button>
+    </div>
+    <div class="modal-body">
+      <p>Earn 1 reward point for every ₹100 of a successful outbound transfer over ₹100.</p>
+      <p>Points are only awarded to the sender, not the receiver.</p>
+      <p>Transaction reward history is visible here for transparency and traceability.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="primary-btn" (click)="closeInfo()">Got it</button>
+    </div>
+  </div>
+</div>

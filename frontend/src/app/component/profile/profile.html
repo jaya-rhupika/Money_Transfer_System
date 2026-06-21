@@ -33,6 +33,40 @@
       </div>
     </div>
 
+    <div class="password-card">
+      <h3>Account Security</h3>
+      <p>Manage your login password securely.</p>
+      <button class="primary-btn" (click)="openPasswordPopup()">Change Password</button>
+    </div>
+
+    <div class="modal-backdrop" *ngIf="passwordPopup" (click)="closePasswordPopup()"></div>
+    <div class="password-modal" *ngIf="passwordPopup">
+      <div class="modal-header">
+        <h3>Change Password</h3>
+        <button class="close-btn" (click)="closePasswordPopup()">×</button>
+      </div>
+
+      <div class="form-row">
+        <label>Current Password</label>
+        <input type="password" [(ngModel)]="currentPassword" placeholder="Enter current password" />
+      </div>
+      <div class="form-row">
+        <label>New Password</label>
+        <input type="password" [(ngModel)]="newPassword" placeholder="Enter new password" />
+      </div>
+      <div class="form-row">
+        <label>Confirm New Password</label>
+        <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm new password" />
+      </div>
+
+      <div *ngIf="passwordError" class="message error">{{ passwordError }}</div>
+      <div *ngIf="passwordMessage" class="message success">{{ passwordMessage }}</div>
+
+      <button class="primary-btn" (click)="changePassword()" [disabled]="savingPassword">
+        {{ savingPassword ? 'Saving...' : 'Update Password' }}
+      </button>
+    </div>
+
     <!-- Bottom Navigation -->
     <div class="bottom-nav">
       <button class="nav-item" (click)="goHome()">

@@ -6,6 +6,8 @@ import { Transfer } from './component/transfer/transfer';
 
 import { Profile } from './component/profile/profile';
 import { History } from './component/history/history';
+import { Rewards } from './component/rewards/rewards';
+import { Redeem } from './component/redeem/redeem';
 
 const routes: Routes = [
   {
@@ -21,6 +23,12 @@ const routes: Routes = [
 
   // History
   { path: 'history/:id', component: History },
+
+  // Rewards
+  { path: 'rewards/:id', component: Rewards },
+
+  // Redeem (placeholder)
+  { path: 'redeem/:id', component: Redeem },
 
   // Profile
   { path: 'profile/:id', component: Profile },

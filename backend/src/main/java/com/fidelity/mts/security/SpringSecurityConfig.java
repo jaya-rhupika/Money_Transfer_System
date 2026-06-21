@@ -6,6 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration
 public class SpringSecurityConfig {
@@ -16,7 +17,13 @@ public class SpringSecurityConfig {
                 .anyRequest().authenticated()
 
         );
-        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(
+            httpBasic -> httpBasic.authenticationEntryPoint((request, response, authException) -> {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setContentType("application/json");
+                response.getWriter().write("{\"message\": \"Invalid username or password\"}");
+            })
+        );
         return http.build();
     }
 }

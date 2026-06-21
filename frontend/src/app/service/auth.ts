@@ -43,39 +43,47 @@ export class AuthService {
 
   logout() {
 		if (this.isBrowser) {
-			try { sessionStorage.removeItem(this.SESSION_KEY); } catch { }
-		}
-		this.username = '';
-		this.password = '';
-	};
+ 		try { sessionStorage.removeItem(this.SESSION_KEY); sessionStorage.removeItem(this.TOKEN_KEY); } catch { }
+ 	}
+ 	this.username = '';
+ 	this.password = '';
+ };
 
- 	isUserLoggedin() {
-		if (!this.isBrowser) return false;
-		try {
-			const user = sessionStorage.getItem(this.SESSION_KEY);
-			return user !== null;
-		} catch {
-			return false;
-		}
-	};
+ changePassword(currentPassword: string, newPassword: string, confirmPassword: string) {
+   return this.http.put('/auth/change-password', {
+     currentPassword,
+     newPassword,
+     confirmPassword
+   });
+ }
 
-	getLoggedinUser() {
-		if (!this.isBrowser) return '';
-		try {
-			const user = sessionStorage.getItem(this.SESSION_KEY);
-			return user === null ? '' : user;
-		} catch {
-			return '';
-		}
-	};
+ isUserLoggedin(): boolean {
+   if (!this.isBrowser) return false;
+   try {
+     const user = sessionStorage.getItem(this.SESSION_KEY);
+     return user !== null;
+   } catch {
+     return false;
+   }
+ }
 
-	getAuthToken() {
-		if (!this.isBrowser) return '';
-		try {
-			const token = sessionStorage.getItem(this.TOKEN_KEY);
-			return token === null ? '' : token;
-		} catch {
-			return '';
-		}
-	};
+ getLoggedinUser(): string {
+   if (!this.isBrowser) return '';
+   try {
+     const user = sessionStorage.getItem(this.SESSION_KEY);
+     return user === null ? '' : user;
+   } catch {
+     return '';
+   }
+ }
+
+ getAuthToken(): string {
+   if (!this.isBrowser) return '';
+   try {
+     const token = sessionStorage.getItem(this.TOKEN_KEY);
+     return token === null ? '' : token;
+   } catch {
+     return '';
+   }
+ }
 }

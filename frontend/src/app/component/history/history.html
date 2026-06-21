@@ -40,6 +40,7 @@
 <th>Type</th>
 <th>Account</th>
 <th class="right">Amount</th>
+<th>Rewards</th>
 <th>Status</th>
 </tr>
 </thead>
@@ -63,6 +64,10 @@
               {{ isCredit(t) ? '+' : '-' }}₹ {{ t.amount | number:'1.2-2' }}
 </span>
 </td>
+          <td class="reward-cell">
+            <span *ngIf="!isCredit(t) && (t.points || 0) > 0" class="reward-pill">{{ t.points }}🏅</span>
+            <span *ngIf="isCredit(t) || !(t.points || 0)">-</span>
+          </td>
  
           <td>
 <span class="badge" [ngClass]="(t.status || '').toUpperCase() === 'SUCCESS' ? 'ok' : 'bad'">
