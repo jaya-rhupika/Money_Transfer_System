@@ -1,0 +1,257 @@
+/* ── Register Page ── (same deep-green entry theme as login) */
+.page {
+  min-height: 100vh;
+  background: linear-gradient(150deg, #0d2200 0%, #1e3f00 55%, #2d5916 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.brand-icon { font-size: 36px; }
+
+.brand-name {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.3px;
+}
+
+.card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 24px;
+  padding: 36px 32px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.35);
+}
+
+.card-title {
+  margin: 0 0 6px;
+  color: #f1f5f9;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.card-sub {
+  color: #a8c89a;
+  font-size: 14px;
+  margin: 0 0 28px;
+}
+
+.field { margin-bottom: 18px; }
+
+.field label {
+  display: block;
+  color: #c1d9b8;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+  letter-spacing: 0.2px;
+}
+
+.field input {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  color: #e2e8f0;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.field input::placeholder { color: rgba(255,255,255,0.25); }
+
+.field input:focus {
+  border-color: #45a049;
+  background: rgba(69,160,73,0.10);
+  box-shadow: 0 0 0 3px rgba(69,160,73,0.18);
+}
+
+.error-msg {
+  background: rgba(185,28,28,0.15);
+  border: 1px solid rgba(252,165,165,0.3);
+  border-radius: 10px;
+  color: #fca5a5;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #45a049, #2d7a30);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(69,160,73,0.4);
+  margin-top: 4px;
+  font-family: inherit;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2d7a30, #1e5c20);
+  box-shadow: 0 6px 28px rgba(69,160,73,0.5);
+  transform: translateY(-1px);
+}
+
+button[type="submit"]:disabled {
+  background: rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.30);
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.login-link {
+  margin-top: 22px;
+  text-align: center;
+  color: #a8c89a;
+  font-size: 14px;
+}
+
+.login-link span {
+  color: #6dd67a;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.login-link span:hover { color: #9be8a0; text-decoration: underline; }
+
+/* ── Welcome Popup ── */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 24px;
+}
+
+.popup {
+  background: linear-gradient(135deg, #0d2200, #1e3f00);
+  border: 1px solid rgba(69,160,73,0.3);
+  border-radius: 24px;
+  padding: 40px 36px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+  animation: popIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.popup-emoji {
+  font-size: 52px;
+  margin-bottom: 16px;
+}
+
+.popup-title {
+  color: #f1f5f9;
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 14px;
+}
+
+.popup-body {
+  color: #a8c89a;
+  font-size: 14px;
+  line-height: 1.7;
+  margin: 0 0 20px;
+}
+
+.account-id-highlight {
+  display: block;
+  background: rgba(69,160,73,0.15);
+  border: 1px solid rgba(69,160,73,0.35);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.account-id-highlight .acc-label {
+  display: block;
+  color: #a8c89a;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+
+.account-id-highlight .acc-number {
+  color: #6dd67a;
+  font-size: 28px;
+  font-weight: 900;
+  font-family: monospace;
+  letter-spacing: 2px;
+}
+
+.popup-hint {
+  color: #7a9a73;
+  font-size: 12px;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.popup-reward {
+  display: inline-block;
+  background: rgba(245,158,11,0.12);
+  border: 1px solid rgba(245,158,11,0.25);
+  color: #fbbf24;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.popup-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #45a049, #2d7a30);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 20px rgba(69,160,73,0.4);
+  font-family: inherit;
+}
+
+.popup-btn:hover {
+  background: linear-gradient(135deg, #2d7a30, #1e5c20);
+  transform: translateY(-1px);
+}

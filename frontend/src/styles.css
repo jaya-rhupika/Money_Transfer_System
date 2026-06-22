@@ -1,1 +1,127 @@
 /* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   MTS Design System — Global CSS Variables
+   All components inherit from here
+   ============================================================ */
+
+:root {
+  /* Brand greens */
+  --clr-primary:        #1e3f00;
+  --clr-primary-mid:    #2d6a2d;
+  --clr-primary-light:  #45a049;
+  --clr-primary-xl:     #e8f5e9;
+
+  /* Page & card surfaces */
+  --clr-bg:             #d4dbd6;          /* sage-green page background */
+  --clr-shell:          rgba(255,255,255,0.30);
+  --clr-card:           #ffffff;
+  --clr-card-hover:     linear-gradient(145deg,#f5fbf5,#eaf4eb);
+
+  /* Borders */
+  --clr-border:         rgba(30,63,0,0.18);
+  --clr-border-strong:  #1e3f00;
+
+  /* Text */
+  --clr-text:           #0f172a;
+  --clr-text-mid:       #334155;
+  --clr-text-muted:     #64748b;
+  --clr-text-on-dark:   #f1f5f9;
+
+  /* Semantic */
+  --clr-success:        #067647;
+  --clr-success-bg:     #eafaf0;
+  --clr-success-border: #bbf7d0;
+  --clr-error:          #b91c1c;
+  --clr-error-bg:       #fff5f5;
+  --clr-error-border:   #fca5a5;
+  --clr-warning:        #b45309;
+  --clr-warning-bg:     #fefce8;
+
+  /* Shadows */
+  --shadow-card:        0 12px 32px rgba(30,63,0,0.12);
+  --shadow-modal:       0 32px 80px rgba(0,0,0,0.22);
+
+  /* Radii */
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --radius-xl:    24px;
+
+  /* Transitions */
+  --ease:         0.2s ease;
+
+  /* Fonts */
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Shared bottom-nav ── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.95);
+  border-top: 1px solid var(--clr-border);
+  backdrop-filter: blur(16px);
+  padding: 10px 8px;
+  display: flex;
+  justify-content: space-around;
+  z-index: 100;
+  box-shadow: 0 -4px 16px rgba(30,63,0,0.08);
+}
+
+.nav-item {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--clr-text-muted);
+  font-weight: 600;
+  font-size: 11px;
+  min-width: 64px;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--ease);
+  font-family: inherit;
+}
+
+.nav-item .material-symbols-outlined {
+  font-size: 22px;
+}
+
+.nav-item:hover {
+  background: rgba(30,63,0,0.07);
+  color: var(--clr-primary);
+}
+
+.nav-item.active {
+  color: var(--clr-primary);
+  background: rgba(30,63,0,0.10);
+}
+
+/* ── Shared modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}

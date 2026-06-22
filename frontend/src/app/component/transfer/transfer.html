@@ -3,65 +3,66 @@
     <h2>Transfer Funds</h2>
 
     <div class="account-info">
-      <p><strong>From Account ID:</strong> {{ accId }}</p>
-      <p><strong>Account Holder:</strong> {{ user.holderName }}</p>
+      <p><strong>Account #:</strong> {{ accId }}</p>
+      <p><strong>Holder:</strong> {{ user.holderName }}</p>
+      <p><strong>Balance:</strong> ₹ {{ user.balance | number:'1.2-2' }}</p>
     </div>
 
     <hr />
 
     <form #transferForm="ngForm" (ngSubmit)="submitTransfer()">
       <div class="form-group">
-        <label for="toAccount">Recipient Account ID:</label>
-        <input 
-          type="number" 
-          id="toAccount" 
-          name="toAccount" 
-          [(ngModel)]="recipientId" 
-          required 
-          placeholder="Enter recipient ID">
+        <label for="toAccount">Recipient Account Number</label>
+        <input
+          type="number"
+          id="toAccount"
+          name="toAccount"
+          [(ngModel)]="recipientId"
+          required
+          min="1"
+          placeholder="Enter recipient account number">
       </div>
 
       <div class="form-group">
-        <label for="amount">Amount:</label>
-        <input 
-          type="number" 
-          id="amount" 
-          name="amount" 
-          [(ngModel)]="transferAmount" 
-          required 
-          min="1" 
+        <label for="amount">Amount (₹)</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          [(ngModel)]="transferAmount"
+          required
+          min="1"
           placeholder="0.00">
       </div>
 
-      <button type="submit" [disabled]="!transferForm.form.valid">
-        Send Transfer
+      <button type="submit" [disabled]="!transferForm.form.valid || isSubmitting">
+        {{ isSubmitting ? 'Processing…' : 'Send Transfer' }}
       </button>
     </form>
 
     <!-- Bottom Navigation -->
-    <div class="bottom-nav">
+    
+  </div>
+  <div class="bottom-nav">
       <button class="nav-item" (click)="goHome()">
         <span class="material-symbols-outlined">home</span>
         <div>Home</div>
       </button>
-
       <button class="nav-item active" (click)="goToTransfer()">
         <span class="material-symbols-outlined">sync_alt</span>
         <div>Transfer</div>
       </button>
-
       <button class="nav-item" (click)="goToHistory()">
         <span class="material-symbols-outlined">history</span>
         <div>History</div>
       </button>
     </div>
-  </div>
 </div>
 
 <ng-template #loading>
   <div class="transfer-container">
     <div class="transfer-shell">
-      <div class="loading-template">Loading account details...</div>
+      <div class="loading-template">Loading account details…</div>
     </div>
   </div>
 </ng-template>
@@ -69,16 +70,17 @@
 <!-- Success Modal -->
 <div class="modal-overlay" *ngIf="showSuccessModal">
   <div class="modal-dialog">
+    <div class="modal-icon">✅</div>
     <h2>Transfer Successful!</h2>
     <p class="modal-message">Your funds have been transferred successfully.</p>
-    
+
     <div class="transaction-id">
       <label>Transaction ID</label>
       <div class="id-value">{{ transactionId }}</div>
     </div>
 
     <button class="modal-btn" (click)="closeModalAndReturn()">
-      OK
+      Done
     </button>
   </div>
 </div>
@@ -86,10 +88,17 @@
 <!-- Error Modal -->
 <div class="modal-overlay" *ngIf="showErrorModal">
   <div class="modal-dialog modal-error">
+    <div class="modal-icon">❌</div>
     <h2>Transfer Failed</h2>
-    <p class="modal-message">{{ errorMessage }}</p>
+    <div class="error-detail">
+      <div class="error-code" *ngIf="errorCode">Code: {{ errorCode }}</div>
+      <div class="error-text">{{ errorMessage }}</div>
+    </div>
+    <p class="modal-message">
+      This transaction has been recorded as <strong>FAILED</strong> in your history.
+    </p>
     <button class="modal-btn modal-btn-error" (click)="closeErrorModal()">
-      OK
+      Close
     </button>
   </div>
 </div>

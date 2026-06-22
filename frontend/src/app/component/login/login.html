@@ -1,31 +1,50 @@
-<div id="title">Money Transfer System</div>
+<div class="page">
 
-<form (ngSubmit)="doLogin()">
-  <div class="form-container">
-    <div class="form-content">
+  <div class="brand">
+    <div class="brand-icon">💸</div>
+    <div class="brand-name">Money Transfer</div>
+  </div>
 
-      <label for="username">User ID:</label>
-      <input 
-        type="number" 
-        id="username" 
-        name="username" 
-        [(ngModel)]="username" 
-        required>
+  <div class="card">
+    <h2 class="card-title">Welcome back</h2>
+    <p class="card-sub">Sign in with your account number</p>
 
-      <label for="password">Password: </label>
-      <input 
-        type="password" 
-        id="password" 
-        name="password" 
-        [(ngModel)]="password" 
-        required>
+    <form #loginForm="ngForm" (ngSubmit)="doLogin()">
 
-      <button 
-        type="submit" 
-        [disabled]="!username || !password">
-        Submit
+      <div class="field">
+        <label>Account Number</label>
+        <input
+          type="number"
+          name="username"
+          [(ngModel)]="username"
+          placeholder="Enter your account number"
+          required
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <div class="error-msg" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="!username || !password || isSubmitting">
+        {{ isSubmitting ? 'Signing in…' : 'Sign In' }}
       </button>
 
+    </form>
+
+    <div class="register-link">
+      New here? <span (click)="goToRegister()">Create an account</span>
     </div>
   </div>
-</form>
+
+</div>

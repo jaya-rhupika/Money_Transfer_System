@@ -1,99 +1,124 @@
 <div class="page">
-<div class="shell">
-<div class="header">
-<h2>Transaction History</h2>
-<div class="sub">Account: {{ accId }}</div>
-</div>
- 
-    <div class="filters">
-<button class="filter-btn" [class.active]="filterMode==='all'" (click)="setFilter('all')">
-        All
-</button>
-<button class="filter-btn" [class.active]="filterMode==='sent'" (click)="setFilter('sent')">
-        Sent
-</button>
-<button class="filter-btn" [class.active]="filterMode==='received'" (click)="setFilter('received')">
-        Received
-</button>
-</div>
+  <div class="shell">
 
-    <div class="search-export">
-      <input 
-        type="text" 
-        class="search-input" 
+    <div class="header">
+      <div class="header-left">
+        <div class="header-icon">📋</div>
+        <div>
+          <h2>Transaction History</h2>
+          <div class="sub">Account: {{ accId }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn" [class.active]="filterMode==='all'" (click)="setFilter('all')">
+        All
+      </button>
+      <button class="filter-btn" [class.active]="filterMode==='sent'" (click)="setFilter('sent')">
+        ↑ Sent
+      </button>
+      <button class="filter-btn" [class.active]="filterMode==='received'" (click)="setFilter('received')">
+        ↓ Received
+      </button>
+    </div>
+
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        class="search-input"
         placeholder="Search by amount or account number..."
         [(ngModel)]="searchQuery"
       />
     </div>
 
- 
-    <div *ngIf="loading" class="loading">Loading transactions...</div>
- 
-    <div *ngIf="!loading && filteredTransactions.length === 0" class="empty">
-      No transactions found.
-</div>
- 
-    <table *ngIf="!loading && filteredTransactions.length > 0" class="tx-table">
-<thead>
-<tr>
-<th>Date</th>
-<th>Type</th>
-<th>Account</th>
-<th class="right">Amount</th>
-<th>Rewards</th>
-<th>Status</th>
-</tr>
-</thead>
- 
-      <tbody>
-<tr *ngFor="let t of filteredTransactions">
-<td>{{ t.createdOn | date:'dd MMM yyyy, hh:mm a' }}</td>
- 
-          <td>
-<span class="chip" [ngClass]="isCredit(t) ? 'credit' : 'debit'">
-              {{ isCredit(t) ? 'CREDIT' : 'DEBIT' }}
-</span>
-</td>
+    <div *ngIf="loading" class="loading-state">
+      <div class="spinner"></div>
+      <span>Loading transactions...</span>
+    </div>
 
-          <td class="account-info">
-            {{ isCredit(t) ? 'From: ' + t.fromAccountId : 'To: ' + t.toAccountId }}
-          </td>
- 
-          <td class="right">
-<span [ngClass]="isCredit(t) ? 'amt-credit' : 'amt-debit'">
-              {{ isCredit(t) ? '+' : '-' }}₹ {{ t.amount | number:'1.2-2' }}
-</span>
-</td>
-          <td class="reward-cell">
-            <span *ngIf="!isCredit(t) && (t.points || 0) > 0" class="reward-pill">{{ t.points }}🏅</span>
-            <span *ngIf="isCredit(t) || !(t.points || 0)">-</span>
-          </td>
- 
-          <td>
-<span class="badge" [ngClass]="(t.status || '').toUpperCase() === 'SUCCESS' ? 'ok' : 'bad'">
-              {{ statusText(t) }}
-</span>
-</td>
-</tr>
-</tbody>
-</table>
- 
-    <div class="bottom-nav">
-<button class="nav-item" (click)="goHome()">
-<span class="material-symbols-outlined">home</span>
-<div>Home</div>
-</button>
- 
-      <button class="nav-item" (click)="goToTransfer()">
-<span class="material-symbols-outlined">sync_alt</span>
-<div>Transfer</div>
-</button>
- 
-      <button class="nav-item active" (click)="goToHistory()">
-<span class="material-symbols-outlined">history</span>
-<div>History</div>
-</button>
-</div>
- 
+    <div *ngIf="!loading && filteredTransactions.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <div class="empty-text">No transactions found</div>
+      <div class="empty-sub">Try changing the filter or search term</div>
+    </div>
+
+    <div class="table-wrapper" *ngIf="!loading && filteredTransactions.length > 0">
+      <table class="tx-table">
+        <thead>
+          <tr>
+            <th>Date & Time</th>
+            <th>Type</th>
+            <th>Account</th>
+            <th class="right">Amount</th>
+            <th class="center">Rewards</th>
+            <th class="center">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of filteredTransactions" class="tx-row">
+
+            <td class="date-cell">
+              <div class="date-main">{{ t.createdOn | date:'dd MMM yyyy' }}</div>
+              <div class="date-time">{{ t.createdOn | date:'hh:mm a' }}</div>
+            </td>
+
+            <td>
+              <span class="chip" [ngClass]="isCredit(t) ? 'chip-credit' : 'chip-debit'">
+                <span class="chip-dot"></span>
+                {{ isCredit(t) ? 'CREDIT' : 'DEBIT' }}
+              </span>
+            </td>
+
+            <td class="account-cell">
+              <span class="acc-label">{{ isCredit(t) ? 'From' : 'To' }}</span>
+              <span class="acc-id">Acc #{{ isCredit(t) ? t.fromAccountId : t.toAccountId }}</span>
+            </td>
+
+            <td class="right">
+              <span class="amount" [ngClass]="isCredit(t) ? 'amt-credit' : 'amt-debit'">
+                {{ isCredit(t) ? '+' : '-' }}₹{{ t.amount | number:'1.2-2' }}
+              </span>
+            </td>
+
+            <td class="center">
+              <span *ngIf="getPoints(t) > 0" class="reward-pill">
+                🏅 {{ getPoints(t) }} pts
+              </span>
+              <span *ngIf="getPoints(t) === 0" class="reward-none">—</span>
+            </td>
+
+            <td class="center">
+              <span class="badge" [ngClass]="(t.status || '').toUpperCase() === 'SUCCESS' ? 'badge-ok' : 'badge-bad'">
+                {{ statusText(t) }}
+              </span>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tx-count" *ngIf="!loading && filteredTransactions.length > 0">
+      Showing {{ filteredTransactions.length }} transaction{{ filteredTransactions.length === 1 ? '' : 's' }}
+    </div>
+
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="nav-item" (click)="goHome()">
+      <span class="material-symbols-outlined">home</span>
+      <div>Home</div>
+    </button>
+    <button class="nav-item" (click)="goToTransfer()">
+      <span class="material-symbols-outlined">sync_alt</span>
+      <div>Transfer</div>
+    </button>
+    <button class="nav-item active" (click)="goToHistory()">
+      <span class="material-symbols-outlined">history</span>
+      <div>History</div>
+    </button>
   </div>
 </div>

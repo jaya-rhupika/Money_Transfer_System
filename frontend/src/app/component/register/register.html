@@ -1,0 +1,82 @@
+<div class="page">
+
+  <div class="brand">
+    <div class="brand-icon">💸</div>
+    <div class="brand-name">Money Transfer</div>
+  </div>
+
+  <div class="card">
+    <h2 class="card-title">Create Account</h2>
+    <p class="card-sub">Join and get ₹200 free on signup!</p>
+
+    <form #registerForm="ngForm" (ngSubmit)="doRegister()">
+
+      <div class="field">
+        <label>Full Name</label>
+        <input
+          type="text"
+          name="name"
+          [(ngModel)]="name"
+          placeholder="e.g. Ravi Kumar"
+          required
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          placeholder="Create a password"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label>Confirm Password</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          [(ngModel)]="confirmPassword"
+          placeholder="Re-enter password"
+          required
+        />
+      </div>
+
+      <div class="error-msg" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="isSubmitting || !registerForm.form.valid">
+        {{ isSubmitting ? 'Creating Account…' : 'Create Account' }}
+      </button>
+
+    </form>
+
+    <div class="login-link">
+      Already have an account? <span (click)="goToLogin()">Sign in</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Welcome Popup -->
+<div class="popup-overlay" *ngIf="showWelcomePopup">
+  <div class="popup">
+    <div class="popup-emoji">🎉</div>
+    <h3 class="popup-title">Welcome aboard!</h3>
+
+    <div class="account-id-highlight">
+      <span class="acc-label">Your Account Number</span>
+      <span class="acc-number">#{{ newAccountId }}</span>
+    </div>
+
+    <p class="popup-hint">
+      Save this number — you'll need it to log in along with your password.
+    </p>
+
+    <div class="popup-reward">₹200 welcome bonus credited! 🌟</div>
+
+    <button class="popup-btn" (click)="goToDashboard()">Go to Dashboard →</button>
+  </div>
+</div>
